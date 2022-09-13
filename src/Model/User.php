@@ -11,8 +11,10 @@ class User
 
     function __construct()
     {
-        $users = [];
-        file_put_contents($this->path, json_encode($users));
+        if (!file_exists($this->path)) {
+            $users = [];
+            file_put_contents($this->path, json_encode($users));
+        }
     }
     function name($name)
     {
@@ -38,14 +40,10 @@ class User
 
     public function save()
     {
-        /* if (!file_exists($this->path)) {
-            $users = [];
-            return file_put_contents($this->path, json_encode($users));
-        } */
         $id = rand(0, 1000);
         $users = file_get_contents($this->path);
         $users = json_decode($users, true);
-        $users[$id] = ['id' => $id, 'name' => $this->name, 'email' => $this->email,'password' => $this->password]; 
+        $users[$id] = ['id' => $id, 'name' => $this->name, 'email' => $this->email, 'password' => $this->password];
         file_put_contents($this->path, json_encode($users));
         return;
     }
