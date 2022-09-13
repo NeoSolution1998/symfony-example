@@ -9,6 +9,11 @@ class User
     public $email;
     public $password;
 
+    function __construct()
+    {
+        $users = [];
+        file_put_contents($this->path, json_encode($users));
+    }
     function name($name)
     {
         $this->name = $name;
@@ -33,10 +38,10 @@ class User
 
     public function save()
     {
-        if (!file_exists($this->path)) {
+        /* if (!file_exists($this->path)) {
             $users = [];
             return file_put_contents($this->path, json_encode($users));
-        }
+        } */
         $id = rand(0, 1000);
         $users = file_get_contents($this->path);
         $users = json_decode($users, true);
