@@ -33,7 +33,7 @@ class User
 
     public function save()
     {
-        if (file_get_contents($this->path) && file_get_contents($this->path) == null) {
+        if (!file_exists($this->path)) {
             $users = [];
             return file_put_contents($this->path, json_encode($users));
         }
